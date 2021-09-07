@@ -1,8 +1,10 @@
-const { projects } = require('../db/db');
+const {ROLE,projects } = require('../db/db');
 
 function setProjects(req, res, next) {
-    if (req.user) {
-        req.projects = projects.filter(project => project.userID === req.user.id);
+    req.projects = projects.filter(project => project.userID === req.user.id);
+
+    if (req.user.role == ROLE.admin) {
+        req.projects = projects;
     }
 
     next();
